@@ -8,7 +8,7 @@ kind: Pod
 spec:
   containers:
     - name: docker
-      image: docker:27-git
+      image: docker:git
       command:
         - cat
       tty: true
