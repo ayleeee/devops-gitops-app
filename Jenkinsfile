@@ -134,6 +134,7 @@ spec:
             set -eu
             cd ${GITOPS_DIR}
 
+            git config --global --add safe.directory "$(pwd)"
             git status --short
 
             if git diff --quiet -- ${VALUES_FILE}; then
