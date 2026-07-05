@@ -3,10 +3,10 @@ pipeline {
 
   parameters {
     string(name: 'IMAGE_TAG', defaultValue: '0.1.0', description: 'Image tag to build and deploy')
+    string(name: 'REGISTRY_ENDPOINT', defaultValue: 'localhost:30500', description: 'Internal registry endpoint')
   }
 
   environment {
-    REGISTRY = '172.31.9.119:30500'
     IMAGE_NAME = 'devops-gitops-app'
   }
 
@@ -22,14 +22,14 @@ pipeline {
         sh '''
           docker build \
             --build-arg APP_VERSION=${IMAGE_TAG} \
-            -t ${REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG} .
+            -t ${REGISTRY_ENDPOINT}/${IMAGE_NAME}:${IMAGE_TAG} .
         '''
       }
     }
 
     stage('Push Image') {
       steps {
-        sh 'docker push ${REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}'
+        sh 'docker push ${REGISTRY_ENDPOINT}/${IMAGE_NAME}:${IMAGE_TAG}'
       }
     }
   }
